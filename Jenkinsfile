@@ -16,12 +16,12 @@ pipeline{
         // disableConcurrentBuilds()
     }
     
-    stages{
-        stage('Init') {
+    stages {
+        stage('get the version') {
             steps {
-                script{
+                script {
                     def packageJson = readJSON file: 'package.json'
-                        packageJson.version = packageVersion  
+                        packageVersion  = packageJson.version
                     echo " apllication $packageVersion " 
                 }
             }
