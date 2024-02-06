@@ -19,8 +19,10 @@ pipeline{
     stages{
         stage('Init') {
             steps {
-                def v=package.json
-                v.version = packageVersion
+                script{
+                    def v=package.json
+                    v.version = packageVersion   
+                }
             }
         }
     }
