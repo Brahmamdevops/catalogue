@@ -20,8 +20,8 @@ pipeline{
         stage('Init') {
             steps {
                 script{
-                    def v=package.json
-                    v.version = packageVersion   
+                    def packageJson = readJSON file: 'package.json'
+                    packageJson.version = packageVersion   
                 }
             }
         }
