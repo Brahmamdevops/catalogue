@@ -22,8 +22,17 @@ pipeline{
                 script {
                     def packageJson = readJSON file: 'package.json'
                         packageVersion  = packageJson.version
-                    echo " apllication $packageVersion " 
+                        echo " apllication $packageVersion " 
                 }
+        
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                sh """
+                    npm install 
+                """
             }
         }
     }
