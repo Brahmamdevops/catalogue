@@ -68,7 +68,7 @@ pipeline{
 
          stage ('Invoke_pipelineA') {
             steps {
-                build job: 'catalogue-deploy', parameters: [
+                build job: 'catalogue-deploy', wait: true , parameters: [
                 string(name: 'version', value: "$packageVersion"),
                 string(name: 'environment', value: "dev"),
                 ]
