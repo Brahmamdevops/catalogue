@@ -61,10 +61,21 @@ pipeline{
                             classifier: '',
                             file: 'catalogue.zip',
                             type: 'zip']
-                ]
-     )
+                        ]
+                )
             }
         }
+
+         stage ('Invoke_pipelineA') {
+            steps {
+                build job: 'catalogue-deploy', parameters: [
+                string(name: 'version', value: "$packageVersion"),
+                string(name: 'environment', value: "dev"),
+                ]
+            }
+        }
+
+
         
     }
 
