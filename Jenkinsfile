@@ -57,7 +57,7 @@ pipeline{
                     repository: 'catalogue',
                     credentialsId: 'CredentialsId',
                         artifacts: [
-                            [artifactId: catalogue,
+                            [artifactId: 'catalogue',
                             classifier: '',
                             file: 'catalogue.zip',
                             type: 'zip']
