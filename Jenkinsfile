@@ -1,60 +1,15 @@
-pipeline{
-     agent {
-        node {
-            label 'AGENT-1'
-            
-        }
-    }
-    
-     environment { 
-        packageVersion = ""
-        nexusUrl ="172.31.5.38:8081"
-    }
+#!groovy
+@Library('roboshop-shared-library') _
 
-    options {
-        ansiColor('xterm')
-        // timeout(time: 1, unit: 'HOURS')
-        // disableConcurrentBuilds()
-    }
+// responsibility to pass what type of application and component is this to pipeline deicssion
 
-    parameters {
-        // string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
-
-        // text(name: 'BIOGRAPHY', defaultValue: '', description: 'Enter some information about the person')
-
-        booleanParam(name: 'Deploy', defaultValue: false, description: 'Toggle this value')
-
-        // choice(name: 'CHOICE', choices: ['One', 'Two', 'Three'], description: 'Pick something')
-
-        // password(name: 'PASSWORD', defaultValue: 'SECRET', description: 'Enter a password')
-    }
-    
-    stages {
-        stage('get the version') {
-            steps {
-                script {
-                    def packageJson = readJSON file: 'package.json'
-                        packageVersion  = packageJson.version
-                        echo " apllication $packageVersion " 
-                }
-        
-            }
-        }
-
-        
-    }
-
-     // post build
-    post { 
-        always { 
-            echo 'I will always say Hello again!'
-            deleteDir()
-        }
-        failure { 
-            echo 'this runs when pipeline is failed, used generally to send some alerts'
-        }
-        success{
-            echo 'I will say Hello when pipeline is success'
-        }
-    }
+def configMap = [
+    application: "nodejsVM",
+    component: "catalogue"
+]
+if( ! env.BRANCH_NAME.equalsIgnoreCase('main')){
+    pipelineDecission.decidePipeline(configMap)
+}
+else{
+    echo "This is PRODUCTION, deal with CR process"
 }
